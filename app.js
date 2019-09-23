@@ -35,6 +35,35 @@ app.get('/blogs',(req,res)=>{
     })
 })
 
+//NEW ROUTE
+app.get('/blogs/new',(req,res)=>{
+    res.render('newBlog')
+})
+
+//CREATE ROUTE
+app.post('/blogs',(req,res)=>{
+    Blog.create(req.body.blog,(err,newblog)=>{
+        if(err){
+            res.render('/new')
+            console.log("error aa gaya bhai");
+        }else{
+            res.redirect('/blogs')
+        }
+    })
+})
+
+//Show Detail
+app.get('/blogs/:id',(req,res)=>{
+    Blog.findById(req.params.id,(err,foundBlog)=>{
+        if(err){
+            console.log("error occurred");
+        }else{
+            res.render("showBlog",{blog:foundBlog})
+
+        }
+    })
+})
+
 app.listen(3000,()=>{
     console.log("yeey connected")
 })
